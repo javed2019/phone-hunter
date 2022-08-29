@@ -1,5 +1,5 @@
-const loadPhones = async() =>{
-    const url = `https://openapi.programming-hero.com/api/phones?search=iphone`
+const loadPhones = async(searchValue) =>{
+    const url = `https://openapi.programming-hero.com/api/phones?search=${searchValue}`
     const res = await fetch(url);
     const data =await res.json();
     displayPhones(data.data);
@@ -7,6 +7,7 @@ const loadPhones = async() =>{
 
 const displayPhones = phones => {
     const phoneContainer = document.getElementById("phone-container");
+    phoneContainer.textContent = ''
     phones.forEach(phone => {
         const phoneDiv = document.createElement('div');
         phoneDiv.classList.add('col');
@@ -23,16 +24,12 @@ const displayPhones = phones => {
     });
 }
 
-loadPhones()
+document.getElementById('search-btn').addEventListener('click', function(){
+    const searchField = document.getElementById('search-field');
+    const searchValue = searchField.value;
+    loadPhones(searchValue);
+})
 
-/*
-<div class="col">
-<div class="card h-100">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-  </div>
-</div>
-</div>
-*/
+
+loadPhones();
+
